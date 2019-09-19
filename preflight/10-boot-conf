@@ -246,6 +246,12 @@ fi
 if [ "$AWS_S3_ENDPOINT" != "" ]; then
   sudo -u "$PHABRICATOR_VCS_USER" ./bin/config set amazon-s3.endpoint "$AWS_S3_ENDPOINT"
 fi
+if [ "$AWS_SES_ENDPOINT" != "" ]; then
+  sudo -u "$PHABRICATOR_VCS_USER" ./bin/config set cluster.mailers '[{"key":"aws-ses","type":"ses","access-key":"$AWS_S3_ACCESS_KEY","secret-key":"$AWS_S3_SECRET_KEY","endpoint":"$AWS_SES_ENDPOINT"]'
+fi
+if [ "$PHABRICATOR_DEFAULT_EMAIL" != "" ]; then
+  sudo -u "$PHABRICATOR_VCS_USER" ./bin/config set metamta.default-address "$PHABRICATOR_DEFAULT_EMAIL"
+fi
 if [ "$SSL_TYPE" == "none" ]; then
   APHLICT_PROTOCOL="http"
   APHLICT_PORT=80
